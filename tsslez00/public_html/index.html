@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title> mirella                 </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body><
+        <div id="div_11"stile="font size: 20px; ">...titolo assente...</di>
+        <div>secondo div</div>
+    
+   user: <input id="_input_testo" placeholder="ins.testo" tiype="text" value=""/>
+               
+                
+   
+        <div>secondo div</div>
+        <button onclick="impostaTitolo()">imposta il titolo...</button>
+        <div></div>
+        <button>ok registami</button>       
+    </body>
+</html>
+<script>
+
+function impostaTitolo(){
+
+//recupero oggeto input testo
+var mioObjtesto = document.getElementById("input_testo")
+var txIn = mioObjtesto.value;
+//aassegno alla variabile txin il contenuto dell'input ovvero l'attributo value dell'oggetto
+//recupero oggetto finale da far vedere div_1
+var mioDiv1 = document.getElementById("d");
+//assegno al contenuto del div innerHTML la frase che c'è in txin
+mioDiv1.innerHTML= txIn;
+mioObjtesto.value="";
+
+}
+
+<script

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>BANCA TSS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            
+            #banca {
+                display:none;
+
+            }
+            #login {
+                display: block ;
+
+            }
+<head>
+
+<STYLE>
+.spanstyle {
+position:absolute;
+visibility:visible;
+top:-50px;
+font-size:10pt;
+font-family:Verdana;
+font-weight:bold;
+color:black;
+}
+</STYLE>
+
+<script>
+
+
+var x,y
+var step=12
+var flag=0
+
+// Your snappy message. Important: the space at the end of the sentence!!!
+var message="BUON NATALE * * * * * * "
+message=message.split("")
+
+var xpos=new Array()
+for (i=0;i<=message.length-1;i++) {
+xpos[i]=-50
+}
+
+var ypos=new Array()
+for (i=0;i<=message.length-1;i++) {
+ypos[i]=-50
+}
+
+function handlerMM(e){
+x = (document.layers) ? e.pageX : document.body.scrollLeft+event.clientX
+y = (document.layers) ? e.pageY : document.body.scrollTop+event.clientY
+flag=1
+}
+
+function makesnake() {
+if (flag==1 && document.all) {
+for (i=message.length-1; i>=1; i--) {
+xpos[i]=xpos[i-1]+step
+ypos[i]=ypos[i-1]
+}
+xpos[0]=x+step
+ypos[0]=y
+
+for (i=0; i<message.length-1; i++) {
+var thisspan = eval("span"+(i)+".style")
+thisspan.posLeft=xpos[i]
+thisspan.posTop=ypos[i]
+}
+}
+
+else if (flag==1 && document.layers) {
+for (i=message.length-1; i>=1; i--) {
+xpos[i]=xpos[i-1]+step
+ypos[i]=ypos[i-1]
+}
+xpos[0]=x+step
+ypos[0]=y
+
+for (i=0; i<message.length-1; i++) {
+var thisspan = eval("document.span"+i)
+thisspan.left=xpos[i]
+thisspan.top=ypos[i]
+}
+}
+var timer=setTimeout("makesnake()",30)
+}
+
+</script>
+
+</head>
+<body onLoad="makesnake()" style="width:100%;overflow-x:hidden;overflow-y:scroll">
+
+<script>
+<!-- Beginning of JavaScript -
+
+for (i=0;i<=message.length-1;i++) {
+document.write("<span id='span"+i+"' class='spanstyle'>")
+document.write(message[i])
+document.write("</span>")
+}
+
+if (document.layers){
+document.captureEvents(Event.MOUSEMOVE);
+}
+document.onmousemove = handlerMM;
+
+// - End of JavaScript - -->
+</script>
+
+</body>
+</html>
+
+        </style> 
+    </head>
+    <body>
+
+
+        <div id="login">
+            <h2>LOGIN</h2>
+            <input type="text" id="in_usr" placeholder="ins.username"/><br/>
+            <input type="text" id="in_pwd" placeholder="ins.password"/><br/>
+            <input type="text" id="in_tkn" placeholder="ins.token"/><br/>
+            <button onclick="loginUser()">Login</button>
+
+
+
+
+
+        </div>
+        <div id="banca">
+            <div id="div_banca">BANCA TSS conto corrente di <span id="sp_nome"></span></div>
+            <br/>
+            <input type="text" id="in_nome" value="" placeholder="ins. cognome e nome" />
+            <button id="bt_login" onclick="inserisciNome()">
+                Login
+            </button>
+            <div id="div_saldo">Saldo corrente: <span id="sp_saldo">0</span> €</div>
+
+            <!-- Versamenti -->
+            <div class="versamenti"> 
+                <h3>VERSAMENTI</h3>
+                <input type="text" id="in_vers" value="" placeholder="ins. importo da versare" />
+                <button id="bt_vers" onclick="versaImporto()">
+                    Versa Importo
+                </button>
+            </div>  
+
+            <!-- Prelievi-->
+            <div class="prelievi"> 
+                <h3>PRELIEVI</h3>
+                <input type="text" id="in_prev" value="" placeholder="ins. importo da prelevare" />
+                <button id="bt_prev" onclick="prelevaImporto()">
+                    Preleva Importo
+                </button>
+            </div>    
+
+            <div id="div_notifiche" >area notifiche: <span id="sp_notif">nulla da segnalare</span></div>
+            <div id="div_mov">
+                <h3>MOVIMENTI</h3>
+                <!-- Tabella -->
+                <table>
+                    <!-- riga -->
+                    <tr>
+                        <!-- Table header, intestazione -->
+                        <th>Versamenti</th><th>Prelievi</th>
+                    </tr>
+                    <tr>
+                        <!-- contenuto del td 123<br><br/> -->
+                        <td id="td_vers"></td>
+                        <td id="td_prev"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+<script>
+
+    function  versaImporto() {
+
+        //se in in_vers c'è qualcosa di errato non fare niente ed avvertire
+
+        /* sintassi IF    
+         if (condizione) {
+         // cosa fare se vero
+         }
+         else {
+         // cosa fare se falso
+         }
+         */
+
+        //metto la frase ad esempio "123" dentro a saldo_current
+        var txsaldo_current = document.getElementById("sp_saldo").innerHTML;
+
+        //metto la frase ad esempio "123" dentro a importo_current
+        var tximporto_current = document.getElementById("in_vers").value;
+
+        //per trasformare il testo in numero si può moltiplicare "*" ad esempio
+        //saldo_current=saldo_current*1
+        var saldo = parseFloat(txsaldo_current);
+
+        if (isNaN(tximporto_current)) {
+            alert("non hai scritto un numero, riprova!");
+
+        } else {
+            var importo = parseFloat(tximporto_current);
+            if (importo > 0) {
+
+                //sommo due numeri (e non testi)
+                var nuovo_saldo = saldo + importo;
+                //vado a scrivere sulla pagina web il saldo
+                document.getElementById("sp_saldo").innerHTML = nuovo_saldo;
+                //cancello il valore inserito nella casella versamenti
+
+                //costruisco la lista movimenti nella tabella, prelevo l'attuale contenuto della cella td_vers 
+                //successivamente concateno a quello che c'era il valore versato e un tag di andata a capo <br/>
+                var txtd_vers = document.getElementById("td_vers").innerHTML;
+                txtd_vers = txtd_vers + tximporto_current + "<br/>";
+                document.getElementById("td_vers").innerHTML = txtd_vers;
+                //costruisco la lista movimenti nella tabella, prelevo l'attuale contenuto della cella td_prev 
+                //successivamente concateno a quello che c'era il "-" e un tag di andata a capo <br/>
+                var txtd_prev = document.getElementById("td_prev").innerHTML;
+                txtd_prev = txtd_prev + "-" + "<br/>";
+                document.getElementById("td_prev").innerHTML = txtd_prev;
+            } else {
+                alert("non hai scritto un numero valido!");
+
+            }
+        }
+        document.getElementById("in_vers").value = "";
+
+    }
+
+    function  prelevaImporto() {
+        //metto la frase ad esempio "123" dentro a saldo_current
+        var txsaldo_current = document.getElementById("sp_saldo").innerHTML;
+
+        //metto la frase ad esempio "123" dentro a importo_current
+        var tximporto_current = document.getElementById("in_prev").value;
+
+        //per trasformare il testo in numero si può moltiplicare "*" ad esempio
+        //saldo_current=saldo_current*1
+        var saldo = parseFloat(txsaldo_current);
+
+        if (isNaN(tximporto_current)) {
+            alert("non hai scritto un numero, riprova!");
+
+        } else {
+
+
+
+            var importo = parseFloat(tximporto_current);
+
+            if (importo > 0) {
+                //sottraggo al saldo l'importo prelevato
+                var nuovo_saldo = saldo - importo;
+
+                //vado a scrivere sulla pagina web il saldo
+                document.getElementById("sp_saldo").innerHTML = nuovo_saldo;
+
+                //costruisco la lista movimenti nella tabella, prelevo l'attuale contenuto della cella td_vers 
+                //successivamente concateno a quello che c'era il "-" e un tag di andata a capo <br/>
+                var txtd_vers = document.getElementById("td_vers").innerHTML;
+                txtd_vers = txtd_vers + "-" + "<br/>";
+                document.getElementById("td_vers").innerHTML = txtd_vers;
+
+                //costruisco la lista movimenti nella tabella, prelevo l'attuale contenuto della cella td_prev 
+                //successivamente concateno a quello che c'era il valore prelevato e un tag di andata a capo <br/>
+                var txtd_prev = document.getElementById("td_prev").innerHTML;
+                txtd_prev = txtd_prev + tximporto_current + "<br/>";
+                document.getElementById("td_prev").innerHTML = txtd_prev;
+            } else {
+                alert("non hai scritto un numero valido!");
+
+            }
+        }
+        //cancello il valore inserito nella casella versamenti
+        document.getElementById("in_prev").value = ""
+    }
+
+
+    function inserisciNome() {
+        var txnome = document.getElementById("in_nome").value;
+
+
+        if (txnome > "") {
+            document.getElementById("sp_nome").innerHTML = txnome;
+        }
+
+    }
+    
+    function loginUser() {
+        var okusr = "mirella";
+        var okpwd = "mirella";
+        var oktkn = "qwertyuiop";
+
+        var txusr = document.getElementById("in_usr").value;
+        var txpwd = document.getElementById("in_pwd").value;
+        var txtkn = document.getElementById("in_tkn").value;
+        if ((txusr == okusr && txpwd == okpwd) || txtkn == oktkn) {
+            //cosa fare se vero e quindi ok
+            alert("ok ti faccio entrare");
+            document.getElementById("banca").style.display="block";
+            document.getElementById("login").style.display="none";
+        } else {
+            // cosa fare se uguale}
+            alert("dati non validi");
+        }
+
+    }
+</script>
